@@ -10,16 +10,18 @@
 
     <meta charset="utf-8">
 
-    <title>Covid Testing</title>
+    <title>Covid Cases</title>
   </head>
   <body>
-    <h1>Covid Testing Data</h1>
-    <p>Starting in the beggining of 2020 </p>
+    <h1>United States Covid Case Data</h1>
+    <p>Covid-19 took the world by storm starting in late 2019 and really started effecting
+    the entire world starting in 2020. Below the graph maps out the overall growth of culmative Covid cases in the
+    United States, from the start of 2020 until the end of July 2021.</p>
     <div id="my_dataviz"></div>
   <svg width="200" height="200"></svg>
   <script>
 
-    const margin = {top: 10, right: 10, bottom: 30, left: 75},
+    const margin = {top: 10, right: 30, bottom: 30, left: 75},
         width = 1000 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
@@ -72,12 +74,12 @@
 
           const annotations = [{
             note: {
-              label: "First cases recorded in the US.",
+              label: "First major spike in the US",
               bgPadding: 20,
-              title: "Start of Covid Outbreak"
+              title: "Case Spike"
             },
 
-            x:140,
+            x:190,
             y:370,
             dy: -50,
             dx: 0,
@@ -131,7 +133,7 @@
     // Add dots
     svg.append('g')
       .selectAll("dot")
-      .data(data.filter(function(d,i){return i<3, d.value == 1 ||d.value == 9024932 ||d.value == 34864172})) // the .filter part is just to keep a few dots on the chart, not all of them
+      .data(data.filter(function(d){return d.value == 9024932 ||d.value == 34864172})) // the .filter part is just to keep a few dots on the chart, not all of them
       .enter()
       .append("circle")
         .attr("cx", function (d) { return x(d.date); } )
