@@ -16,12 +16,12 @@
     <h1>Covid Testing Data</h1>
     <p>Starting in the beggining of 2020 </p>
     <div id="my_dataviz"></div>
-  <svg width="700" height="700"></svg>
+  <svg width="200" height="200"></svg>
   <script>
 
-    const margin = {top: 10, right: 30, bottom: 30, left: 60},
-        width = 800 - margin.left - margin.right,
-        height = 800 - margin.top - margin.bottom;
+    const margin = {top: 10, right: 10, bottom: 30, left: 75},
+        width = 600 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
 
     const svg = d3.select("#my_dataviz")
@@ -77,10 +77,10 @@
               title: "Start of Covid Outbreak"
             },
 
-            x:150,
-            y:775,
-            dy: -200,
-            dx: 100,
+            x:140,
+            y:370,
+            dy: -50,
+            dx: 0,
             subject: { radius: 20, radiusPadding: 10 }
           }]
 
@@ -95,7 +95,7 @@
 
 
     const tooltip = d3.select("#my_dataviz")
-      .append("g")
+      .append("div")
       .style("opacity", 0)
       .attr("class", "tooltip")
       .style("background-color", "white")
@@ -116,8 +116,8 @@
     const mousemove = function(event, d) {
       tooltip
         .html(`Culmative # of Cases: ${d.value}`)
-        .style("left", (event.x)/1 + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-        .style("top", (event.y)/1 + "px")
+        .style("left", (event.x)/2 + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+        .style("top", (event.y)/2 + "px")
     }
 
     // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
