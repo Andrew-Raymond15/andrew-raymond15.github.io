@@ -6,21 +6,24 @@
 
     <script src="https://d3js.org/d3.v6.js"></script>
 
+    <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+
     <meta charset="utf-8">
 
     <title>Covid Testing</title>
   </head>
   <body>
     <h1>Covid Testing Data</h1>
+    <p>Starting in the beggining of 2020 </p>
     <div id="my_dataviz"></div>
   <svg width="700" height="700"></svg>
   <script>
 
     const margin = {top: 10, right: 30, bottom: 30, left: 60},
-        width = 460 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+        width = 800 - margin.left - margin.right,
+        height = 800 - margin.top - margin.bottom;
 
-    // append the svg object to the body of the page
+
     const svg = d3.select("#my_dataviz")
       .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -28,42 +31,69 @@
       .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    //Read the data
-    d3.csv("United_States_COVID-19_Cases_and_Deaths_by_State_over_Time.csv",
 
-      // When reading the csv, I must format variables:
+    d3.csv("us.csv",
+
+
       function(d){
-        return { date : d3.timeParse("%Y-%m-%d")(d.submission_date), value : d.value }
+        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.cases }
       }).then(
 
-      // Now I can use this dataset:
+
       function(data) {
 
-        // Add X axis --> it is a date format
+
         const x = d3.scaleTime()
-          .domain(d3.extent(data, function(d) { return d.submission_date; }))
+          .domain(d3.extent(data, function(d) { return d.date; }))
           .range([ 0, width ]);
         svg.append("g")
           .attr("transform", `translate(0, ${height})`)
           .call(d3.axisBottom(x));
 
-        // Add Y axis
+
         const y = d3.scaleLinear()
           .domain([0, d3.max(data, function(d) { return +d.value; })])
           .range([ height, 0 ]);
         svg.append("g")
           .call(d3.axisLeft(y));
 
-        // Add the line
+
         svg.append("path")
           .datum(data)
           .attr("fill", "none")
-          .attr("stroke", "steelblue")
+          .attr("stroke", "blue")
           .attr("stroke-width", 1.5)
           .attr("d", d3.line()
-            .x(function(d) { return x(d.submission_date) })
+            .x(function(d) { return x(d.date) })
             .y(function(d) { return y(d.value) })
-            )
+          );
+
+          const type = d3.annotationCalloutCircle
+
+          const annotations = [{
+            note: {
+              label: "First cases recorded in the US.",
+              bgPadding: 20,
+              title: "Start of Covid Outbreak"
+            },
+
+            x:150,
+            y:775,
+            dy: -200,
+            dx: 100,
+            subject: { radius: 20, radiusPadding: 10 }
+          }]
+
+
+
+          const makeAnnotations = d3.annotation()
+            .type(d3.annotationCalloutCircle)
+            .annotations(annotations)
+
+          d3.select("svg")
+            .append("g")
+            .attr("class", "annotation-group")
+            .call(makeAnnotations)
 
     })
   </script>
