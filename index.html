@@ -87,6 +87,7 @@
           const type = d3.annotationCalloutCircle
 
           const annotations = [{
+            type: d3.annotationCalloutCircle,
             note: {
               label: "First major spike in the US",
               bgPadding: 20,
@@ -94,20 +95,34 @@
             },
 
             x:163,
-            y:370,
+            y:565,
             dy: -50,
             dx: 0,
             subject: { radius: 20, radiusPadding: 10 }
+          },
+          {
+            note: {
+              label: "Halfway through pandemic - Cases take major spike",
+              bgPadding: 20,
+              title: "Case Spike"
+            },
+
+            x:428,
+            y:435,
+            dy: 50,
+            dx: 0,
+
           }]
 
           const makeAnnotations = d3.annotation()
-            .type(d3.annotationCalloutCircle)
+            .type(d3.annotationLabel)
             .annotations(annotations)
 
           d3.select("svg")
             .append("g")
             .attr("class", "annotation-group")
             .call(makeAnnotations);
+
 
 
     const tooltip = d3.select("#my_dataviz")
@@ -119,8 +134,6 @@
       .style("border-width", "1px")
       .style("border-radius", "5px")
       .style("padding", "10px")
-
-
 
 
     const mouseover = function(event, d) {
