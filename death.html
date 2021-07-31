@@ -32,7 +32,7 @@
   <svg width="200" height="50"></svg>
   <script>
 
-    const margin = {top: 10, right: 30, bottom: 30, left: 75},
+    const margin = {top: 10, right: 30, bottom: 20, left: 75},
         width = 800 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
 
@@ -69,6 +69,15 @@
           .range([ height, 0 ]);
         svg.append("g")
           .call(d3.axisLeft(y));
+
+          svg.append("text")
+          .attr("x", (width / 2))
+          .attr("y", 25 - (margin.top))
+          .attr("text-anchor", "middle")
+          .style("font-size", "16px")
+          .text("Total Deaths");
+
+
 
           svg.append("path")
             .datum(data)
