@@ -15,7 +15,7 @@
   <body>
     <h1>United States Covid Case Data</h1>
       <p>Covid-19 took the world by storm starting in late 2019 and really started effecting the entire world
-      <br> starting in 2020. According to the CDC "Coronavirus disease (COVID-19) is an infectious disease
+      <br> starting in 2020. Covid-19 According to the CDC "Coronavirus disease (COVID-19) is an infectious disease
       <br>caused by a newly discovered coronavirus. Most people infected with the COVID-19 virus will experience mild
       <br>to moderate respiratory illness and recover without requiring special treatment.  Older people, and those
       <br>with underlying medical problems like cardiovascular disease, diabetes, chronic respiratory disease, and cancer
@@ -24,7 +24,7 @@
       <br>infection by washing your hands or using an alcohol based rub frequently and not touching your face.
       <br>The COVID-19 virus spreads primarily through droplets of saliva or discharge from the nose when an infected person
       <br>coughs or sneezes, so it’s important that you also practice respiratory etiquette (for example, by coughing into a flexed elbow)."
-      <br>This data was utilized from the NYTimes regarding daily case totals for the United States
+      <br>
       <br>
       <br>
 
@@ -32,7 +32,7 @@
     </p>
     <div id="my_dataviz"></div>
     <div id ="tooltip"></div>
-  <svg width="200" height="50"></svg>
+  <svg width="200" height="200"></svg>
   <script>
 
     const margin = {top: 10, right: 30, bottom: 30, left: 75},
@@ -159,7 +159,7 @@
 
     svg.append('g')
       .selectAll("dot")
-      .data(data.filter(function(d){return d.value == 215391 || d.value == 22449576 ||d.value == 30556079 ||d.value == 2703296 ||d.value == 9024932 ||d.value == 34864172}))
+      .data(data.filter(function(d){return d.value == 215391 || d.value == 22449576 ||d.value == 30556079 ||d.value == 2703296 ||d.value == 9024932 ||d.value == 34864172})) // the .filter part is just to keep a few dots on the chart, not all of them
       .enter()
       .append("circle")
         .attr("cx", function (d) { return x(d.date); } )
@@ -174,6 +174,5 @@
 
   });
   </script>
-  <p>This graph shows the increase of cases in the United States from the start of 2020 to current month (July 29th, 2021)</p>
   </body>
 </html>
