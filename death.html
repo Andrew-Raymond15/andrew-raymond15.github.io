@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <script src="https://d3js.org/d3.v6.js"></script>
+
+    <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+
+    <meta charset="utf-8">
+
+    <title>Covid Cases</title>
+  </head>
+  <body>
+    <h1>United States Covid Case Data</h1>
+      <p>Covid-19 took the world by storm starting in late 2019 and really started effecting the entire world
+      <br> starting in 2020. According to the CDC "Coronavirus disease (COVID-19) is an infectious disease
+      <br>caused by a newly discovered coronavirus. Most people infected with the COVID-19 virus will experience mild
+      <br>to moderate respiratory illness and recover without requiring special treatment.  Older people, and those
+      <br>with underlying medical problems like cardiovascular disease, diabetes, chronic respiratory disease, and cancer
+      <br>are more likely to develop serious illness. The best way to prevent and slow down transmission is to be well
+      <br>informed about the COVID-19 virus, the disease it causes and how it spreads. Protect yourself and others from
+      <br>infection by washing your hands or using an alcohol based rub frequently and not touching your face.
+      <br>The COVID-19 virus spreads primarily through droplets of saliva or discharge from the nose when an infected person
+      <br>coughs or sneezes, so it’s important that you also practice respiratory etiquette (for example, by coughing into a flexed elbow)."
+      <br>This data was utilized from the NYTimes regarding daily case totals for the United States
+      <br>
+      <br>
+
+
+    </p>
+    <div id="my_dataviz"></div>
+    <div id ="tooltip"></div>
+  <svg width="200" height="50"></svg>
+  <script>
+
+    const margin = {top: 10, right: 30, bottom: 30, left: 75},
+        width = 800 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
+
+
+    const svg = d3.select("#my_dataviz")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+    d3.csv("us.csv",
+
+
+      function(d){
+        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.cases }
+      }).then(
+
+
+      function(data) {
+
+
+        const x = d3.scaleTime()
+          .domain(d3.extent(data, function(d) { return d.date; }))
+          .range([ 0, width ]);
+        svg.append("g")
+          .attr("transform", `translate(0, ${height})`)
+          .call(d3.axisBottom(x));
+
+
+        const y = d3.scaleLinear()
+          .domain([0, d3.max(data, function(d) { return +d.value; })])
+          .range([ height, 0 ]);
+        svg.append("g")
+          .call(d3.axisLeft(y));
+
+
+        svg.append("path")
+          .datum(data)
+          .attr("fill", "none")
+          .attr("stroke", "blue")
+          .attr("stroke-width", 1.5)
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.date) })
+            .y(function(d) { return y(d.value) })
+          );
+
+          const type = d3.annotationCalloutCircle
+
+          const annotations = [{
+            type: d3.annotationCalloutCircle,
+            note: {
+              label: "First major spike in the US",
+              bgPadding: 20,
+              title: "Case Spike"
+            },
+
+            x:163,
+            y:565,
+            dy: -60,
+            dx: 0,
+            subject: { radius: 20, radiusPadding: 10 }
+          },
+          {
+            note: {
+              label: "Halfway through pandemic - Cases take major spike",
+              bgPadding: 20,
+              title: "Case Spike"
+            },
+
+            x:428,
+            y:435,
+            dy: 50,
+            dx: 0,
+
+          }]
+
+          const makeAnnotations = d3.annotation()
+            .type(d3.annotationLabel)
+            .annotations(annotations)
+
+          d3.select("svg")
+            .append("g")
+            .attr("class", "annotation-group")
+            .call(makeAnnotations);
+
+
+
+    const tooltip = d3.select("#my_dataviz")
+      .append("div")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("background-color", "white")
+      .style("border", "solid")
+      .style("border-width", "1px")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+
+
+    const mouseover = function(event, d) {
+      tooltip
+        .style("opacity", 1)
+    }
+
+    const mousemove = function(event, d) {
+      tooltip
+        .html(`Culmative # of Cases: ${d.value}`)
+        .style("left", (event.x)/2 + "px")
+        .style("top", (event.y)/2 + "px")
+    }
+
+
+    const mouseleave = function(event,d) {
+      tooltip
+        .transition()
+        .duration(200)
+        .style("opacity", 0)
+    }
+
+
+    svg.append('g')
+      .selectAll("dot")
+      .data(data.filter(function(d){return d.value == 215391 || d.value == 22449576 ||d.value == 30556079 ||d.value == 2703296 ||d.value == 9024932 ||d.value == 34864172}))
+      .enter()
+      .append("circle")
+        .attr("cx", function (d) { return x(d.date); } )
+        .attr("cy", function (d) { return y(d.value); } )
+        .attr("r", 5)
+        .style("fill", "green")
+        .style("stroke", "white")
+      .on("mouseover", mouseover )
+      .on("mousemove", mousemove )
+      .on("mouseleave", mouseleave )
+
+
+  });
+  </script>
+  <p>This graph shows the increase of cases in the United States from the start of 2020 to current month (July 29th, 2021)</p>
+  </body>
+</html>
