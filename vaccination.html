@@ -30,7 +30,7 @@
 
 
     </p>
-    <div id="my_dataviz"></div>
+    <div id="narrative_viz"></div>
     <div id ="tooltip"></div>
   <svg width="200" height="50"></svg>
   <script>
@@ -40,7 +40,7 @@
         height = 600 - margin.top - margin.bottom;
 
 
-    const svg = d3.select("#my_dataviz")
+    const svg = d3.select("#narrative_viz")
       .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -48,11 +48,11 @@
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
 
-    d3.csv("us.csv",
+    d3.csv("COVID-19_Vaccinations_in_the_United_States_Jurisdiction.csv",
 
 
       function(d){
-        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.cases, value2 : d.deaths }
+        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.Dist_Per_100K}
       }).then(
 
 
@@ -68,35 +68,37 @@
 
 
         const y = d3.scaleLinear()
-          .domain([0, d3.max(data, function(d) { return +d.value2; })])
+          .domain([0, d3.max(data, function(d) { return +d.value; })])
           .range([ height, 0 ]);
         svg.append("g")
           .call(d3.axisLeft(y));
 
-          svg.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "red")
-            .attr("stroke-width", 1.5)
-            .attr("d", d3.line()
-              .x(function(d) { return x(d.date) })
-              .y(function(d) { return y(d.value2) })
-            );
+
+        svg.append("path")
+          .datum(data)
+          .attr("fill", "none")
+          .attr("stroke", "blue")
+          .attr("stroke-width", 1.5)
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.date) })
+            .y(function(d) { return y(d.value) })
+          );
 
           const type = d3.annotationCalloutCircle
 
           const annotations = [{
-
+            type: d3.annotationCalloutCircle,
             note: {
-              label: "First death reported in the US",
+              label: "First major spike in the US",
               bgPadding: 20,
-              title: "Death"
+              title: "Case Spike"
             },
 
-            x:130,
-            y:550,
+            x:163,
+            y:565,
             dy: -60,
-            dx: 15,
+            dx: 0,
+            subject: { radius: 20, radiusPadding: 10 }
           },
           {
             note: {
@@ -123,7 +125,7 @@
 
 
 
-    const tooltip = d3.select("#my_dataviz")
+    const tooltip = d3.select("#narrative_viz")
       .append("div")
       .style("opacity", 0)
       .attr("class", "tooltip")
@@ -141,7 +143,7 @@
 
     const mousemove = function(event, d) {
       tooltip
-        .html(`Culmative # of Deaths: ${d.value2}`)
+        .html(`Culmative # of Cases: ${d.value}`)
         .style("left", (event.x)/2 + "px")
         .style("top", (event.y)/2 + "px")
     }
@@ -157,11 +159,11 @@
 
     svg.append('g')
       .selectAll("dot")
-      .data(data.filter(function(d){return d.value2 == 1 || d.value2 == 5325 ||d.value2 == 128104 ||d.value2 == 207699 ||d.value2 == 347970 ||d.value2 == 552615 ||d.value2 == 604693}))
+      .data(data.filter(function(d){return d.value == 215391 || d.value == 22449576 ||d.value == 30556079 ||d.value == 2703296 ||d.value == 9024932 ||d.value == 34864172}))
       .enter()
       .append("circle")
         .attr("cx", function (d) { return x(d.date); } )
-        .attr("cy", function (d) { return y(d.value2); } )
+        .attr("cy", function (d) { return y(d.value); } )
         .attr("r", 5)
         .style("fill", "green")
         .style("stroke", "white")
@@ -172,6 +174,6 @@
 
   });
   </script>
-  <p>This graph shows the increase of cases in correlation with the deaths in the United States from the start of 2020 to current month (July 29th, 2021)</p>
+  <p>This graph shows the increase of cases in the United States from the start of 2020 to current month (July 29th, 2021)</p>
   </body>
 </html>

@@ -30,7 +30,7 @@
 
 
     </p>
-    <div id="my_dataviz"></div>
+    <div id="narrative_viz"></div>
     <div id ="tooltip"></div>
   <svg width="200" height="50"></svg>
   <script>
@@ -40,7 +40,7 @@
         height = 600 - margin.top - margin.bottom;
 
 
-    const svg = d3.select("#my_dataviz")
+    const svg = d3.select("#narrative_viz")
       .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -125,7 +125,7 @@
 
 
 
-    const tooltip = d3.select("#my_dataviz")
+    const tooltip = d3.select("#narrative_viz")
       .append("div")
       .style("opacity", 0)
       .attr("class", "tooltip")
