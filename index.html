@@ -133,12 +133,12 @@
     // Add dots
     svg.append('g')
       .selectAll("dot")
-      .data(data.filter(function(d){return d.value == 9024932 ||d.value == 34864172})) // the .filter part is just to keep a few dots on the chart, not all of them
+      .data(data.filter(function(d){return d.value == 215391 || d.value == 22449576 ||d.value == 33300482 ||d.value == 2703296 ||d.value == 9024932 ||d.value == 34864172})) // the .filter part is just to keep a few dots on the chart, not all of them
       .enter()
       .append("circle")
         .attr("cx", function (d) { return x(d.date); } )
         .attr("cy", function (d) { return y(d.value); } )
-        .attr("r", 10)
+        .attr("r", 5)
         .style("fill", "green")
         .style("stroke", "white")
       .on("mouseover", mouseover )
