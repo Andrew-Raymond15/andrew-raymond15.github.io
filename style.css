@@ -5,6 +5,10 @@ body {
 h1,p {
   text-align: center;
 }
+.pagination {
+  display: inline-block;
+  margin: 0, 4px;
+}
 
 .pagination a {
   color: black;

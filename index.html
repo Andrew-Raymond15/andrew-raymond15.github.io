@@ -164,7 +164,7 @@
 
     svg.append('g')
       .selectAll("dot")
-      .data(data.filter(function(d){return d.value == 215391 || d.value == 22449576 ||d.value == 30556079 ||d.value == 2703296 ||d.value == 9024932 ||d.value == 34864172})) // the .filter part is just to keep a few dots on the chart, not all of them
+      .data(data.filter(function(d){return d.value == 215391 || d.value == 22449576 ||d.value == 30556079 ||d.value == 2703296 ||d.value == 9024932 ||d.value == 34864172}))
       .enter()
       .append("circle")
         .attr("cx", function (d) { return x(d.date); } )
