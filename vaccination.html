@@ -98,6 +98,29 @@
             .y(function(d) { return y(d.value2) })
           );
 
+          svg.append("circle")
+            .attr("cx",600)
+            .attr("cy",550)
+            .attr("r", 5)
+            .style("fill", "blue")
+          svg.append("circle")
+            .attr("cx",600)
+            .attr("cy",520)
+            .attr("r", 5)
+            .style("fill", "red")
+          svg.append("text")
+            .attr("x", 620)
+            .attr("y", 550)
+            .text("Deaths")
+            .style("font-size", "11px")
+            .attr("alignment-baseline","middle")
+          svg.append("text")
+            .attr("x", 620)
+            .attr("y", 520)
+            .text("Vaccinations")
+            .style("font-size", "11px")
+            .attr("alignment-baseline","middle")
+
           const type = d3.annotationCalloutCircle
 
           const annotations = [{

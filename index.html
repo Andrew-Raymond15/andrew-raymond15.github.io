@@ -23,6 +23,7 @@
       <br>with underlying medical problems like cardiovascular disease, diabetes, chronic respiratory disease, and cancer
       <br>are more likely to develop serious illness. The best way to prevent and slow down transmission is to be well
       <br>informed about the COVID-19 virus, the disease it causes and how it spreads.""
+      <br>This data was utilized from the <a href="#">NYTimes</a> regarding daily case totals for the United States and the <a href="#">CDC</a> for vaccination rates.
       <br>
       <br>
 
@@ -142,6 +143,18 @@
             .call(makeAnnotations);
 
 
+
+            svg.append("circle")
+              .attr("cx",600)
+              .attr("cy",520)
+              .attr("r", 5)
+              .style("fill", "blue")
+            svg.append("text")
+              .attr("x", 620)
+              .attr("y", 520)
+              .text("Cases")
+              .style("font-size", "11px")
+              .attr("alignment-baseline","middle")
 
     const tooltip = d3.select("#narrative_viz0")
       .append("div")
