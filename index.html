@@ -48,7 +48,17 @@
 
 
 
-        const stateGroup = ["valueA", "valueB", "valueC"]
+    d3.csv("us.csv",
+
+
+      function(d){
+        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.cases, value2 : d.state }
+      }).then(
+
+
+      function(data) {
+
+        const stateGroup = new Set(data.map(d => d.value2))
 
 
 
@@ -59,19 +69,6 @@
         .append('option')
         .text(function (d) { return d; })
         .attr("value", function (d) { return d; })
-
-
-
-    d3.csv("us2.csv",
-
-
-      function(d){
-        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.cases }
-      }).then(
-
-
-      function(data) {
-
 
         const x = d3.scaleTime()
           .domain(d3.extent(data, function(d) { return d.date; }))
