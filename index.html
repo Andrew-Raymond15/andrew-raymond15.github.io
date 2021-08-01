@@ -28,9 +28,10 @@
 
 
     </p>
-    <div id="my_dataviz"></div>
+    <div id ="dropdown"></div>
+    <div id="narrative_viz0"></div>
     <div id ="tooltip"></div>
-  <svg width="200" height="200"></svg>
+  <svg width="200" height="50"></svg>
   <script>
 
     const margin = {top: 10, right: 30, bottom: 30, left: 75},
@@ -38,13 +39,28 @@
         height = 600 - margin.top - margin.bottom;
 
 
-    const svg = d3.select("#my_dataviz")
+    const svg = d3.select("#narrative_viz0")
       .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
+
+
+        const stateGroup = ["valueA", "valueB", "valueC"]
+
+
+
+        d3.select("#dropdown")
+        .selectAll('stateOption')
+        .data(stateGroup)
+        .enter()
+        .append('option')
+        .text(function (d) { return d; })
+        .attr("value", function (d) { return d; })
+
+        
 
     d3.csv("us2.csv",
 
@@ -117,7 +133,19 @@
             dy: 50,
             dx: 0,
 
-          }]
+          },{
+          note: {
+            label: "Cases start spiking for the thrid major time as Delta Variant spreads in the US",
+            bgPadding: 20,
+            title: "Case Spike"
+          },
+
+          x:763,
+          y:55,
+          dy: 60,
+          dx: -20,
+          subject: { radius: 20, radiusPadding: 10 }
+        }]
 
           const makeAnnotations = d3.annotation()
             .type(d3.annotationLabel)
@@ -130,7 +158,7 @@
 
 
 
-    const tooltip = d3.select("#my_dataviz")
+    const tooltip = d3.select("#narrative_viz0")
       .append("div")
       .style("opacity", 0)
       .attr("class", "tooltip")
@@ -148,7 +176,7 @@
 
     const mousemove = function(event, d) {
       tooltip
-        .html(`Culmative # of Cases: ${d.value}`)
+        .html(`Cumulative # of Cases: ${d.value}`)
         .style("left", (event.x)/2 + "px")
         .style("top", (event.y)/2 + "px")
     }
@@ -179,13 +207,14 @@
 
   });
   </script>
+  <p>This first chart shows how cases of Covid-19 have had instances of intense growth and also have slown down at certain points in the year.</p>
   <div class="pagination">
 
     <a href="#">&laquo;</a>
     <a href="index.html">Covid Cases</a>
     <a href="death.html">Covid Deaths</a>
     <a href="vaccination.html">Covid Vaccinations</a>
-    <a href="#">&raquo;</a>
+    <a href="death.html">&raquo;</a>
 
   </div>
 
