@@ -2,11 +2,6 @@ body {
   background-color: #D3D3D3;
 
 }
-a
-{
-  margin: 2em;
-}
-
 
 .pagination a {
   color: black;
@@ -16,6 +11,7 @@ a
   text-decoration: none;
   transition: background-color blue;
   font-size: 19px;
+  margin: 2em;
 }
 .pagination a.active {
   background-color: green;
