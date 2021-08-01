@@ -52,13 +52,14 @@
 
 
       function(d){
-        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.cases, value2 : d.state }
+        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.cases, value2 : d.state, value3 : d.s_cases }
       }).then(
 
 
       function(data) {
 
-        const stateGroup = new Set(data.map(d => d.value2))
+        const stateGroup  = ["United States", "Maine"]
+
 
 
 
@@ -143,6 +144,31 @@
           dx: -20,
           subject: { radius: 20, radiusPadding: 10 }
         }]
+
+        function update(stateGroup) {
+
+      // Create new data with the selection?
+      const dataFilter = data.filter(function(d){return d.value2==stateGroup})
+
+      // Give these new data to update line
+      line
+          .datum(dataFilter)
+          .transition()
+          .duration(1000)
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.value) })
+            .y(function(d) { return y(+d.value3) })
+          )
+
+    }
+
+    // When the button is changed, run the updateChart function
+    d3.select("#dropdown").on("change", function(event,d) {
+        // recover the option that has been chosen
+        const selected = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        update(selected)
+    })
 
           const makeAnnotations = d3.annotation()
             .type(d3.annotationLabel)
