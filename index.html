@@ -28,7 +28,6 @@
 
 
     </p>
-    <select id ="dropdown"></select>
     <div id="narrative_viz0"></div>
     <div id ="tooltip"></div>
   <svg width="200" height="50"></svg>
@@ -52,24 +51,11 @@
 
 
       function(d){
-        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.cases, value2 : d.state, value3 : d.s_cases }
+        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.cases, value2 : d.location, value3 : d.cases }
       }).then(
 
 
       function(data) {
-
-        const stateGroup  = ["United States", "Maine"]
-
-
-
-
-        d3.select("#dropdown")
-        .selectAll('stateOption')
-        .data(stateGroup)
-        .enter()
-        .append('option')
-        .text(function (d) { return d; })
-        .attr("value", function (d) { return d; })
 
         const x = d3.scaleTime()
           .domain(d3.extent(data, function(d) { return d.date; }))
@@ -101,7 +87,7 @@
           .attr("d", d3.line()
             .x(function(d) { return x(d.date) })
             .y(function(d) { return y(d.value) })
-          );
+          )
 
           const type = d3.annotationCalloutCircle
 
@@ -145,30 +131,6 @@
           subject: { radius: 20, radiusPadding: 10 }
         }]
 
-        function update(stateGroup) {
-
-      // Create new data with the selection?
-      const dataFilter = data.filter(function(d){return d.value2==stateGroup})
-
-      // Give these new data to update line
-      line
-          .datum(dataFilter)
-          .transition()
-          .duration(1000)
-          .attr("d", d3.line()
-            .x(function(d) { return x(d.value) })
-            .y(function(d) { return y(+d.value3) })
-          )
-
-    }
-
-    // When the button is changed, run the updateChart function
-    d3.select("#dropdown").on("change", function(event,d) {
-        // recover the option that has been chosen
-        const selected = d3.select(this).property("value")
-        // run the updateChart function with this selected option
-        update(selected)
-    })
 
           const makeAnnotations = d3.annotation()
             .type(d3.annotationLabel)
@@ -233,7 +195,7 @@
   <p>This first chart shows how cases of Covid-19 have had instances of intense growth and also have slown down at certain points in the year.</p>
   <div class="pagination">
 
-    <a href="#">&laquo;</a>
+
     <a href="index.html">Covid Cases</a>
     <a href="death.html">Covid Deaths</a>
     <a href="vaccination.html">Covid Vaccinations</a>
