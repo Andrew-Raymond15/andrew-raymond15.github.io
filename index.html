@@ -22,7 +22,7 @@
       <br>to moderate respiratory illness and recover without requiring special treatment.  Older people, and those
       <br>with underlying medical problems like cardiovascular disease, diabetes, chronic respiratory disease, and cancer
       <br>are more likely to develop serious illness. The best way to prevent and slow down transmission is to be well
-      <br>informed about the COVID-19 virus, the disease it causes and how it spreads.""
+      <br>informed about the COVID-19 virus, the disease it causes and how it spreads."
       <br>This data was utilized from the <a href="https://github.com/nytimes/covid-19-data">NYTimes</a> regarding daily case totals for the United States and the <a href="https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36">CDC</a> for vaccination rates.
       <br>
       <br>
@@ -62,7 +62,7 @@
           .domain(d3.extent(data, function(d) { return d.date; }))
           .range([ 0, width ]);
         svg.append("g")
-          .attr("transform", `translate(0, ${height})`)
+          .attr(`transform`, `translate(0, ${height})`)
           .call(d3.axisBottom(x));
 
 
@@ -162,7 +162,7 @@
       .attr("class", "tooltip")
       .style("background-color", "white")
       .style("border", "solid")
-      .style("border-width", "1px")
+      .style("border-width", "2px")
       .style("border-radius", "5px")
       .style("padding", "10px")
 
@@ -172,7 +172,7 @@
         .style("opacity", 1)
     }
 
-    const mousemove = function(event, d) {
+    const mousemover = function(event, d) {
       tooltip
         .html(`Cumulative # of Cases: ${d.value}`)
         .style("left", (event.x)/2 + "px")
@@ -205,7 +205,7 @@
 
   });
   </script>
-  <p>TIP! Hover over the green dots for additonal information</p>
+  <p>TIP! Hover over the green dots and look above this tip for additonal information.</p>
   <br>
   <p>This first chart shows how cases of Covid-19 have had instances of intense growth and also have slown down at certain points in the year. The increase and decrease of cases seem to be effected by external factors that we will reference later in the slide show</p>
   <div class="pagination">
