@@ -83,7 +83,7 @@
             .datum(data)
             .attr("fill", "none")
             .attr("stroke", "blue")
-            .attr("stroke-width", 1.5)
+            .attr("stroke-width", 1.75)
             .attr("d", d3.line()
               .x(function(d) { return x(d.date) })
               .y(function(d) { return y(d.value) }));
@@ -92,7 +92,7 @@
           .datum(data)
           .attr("fill", "none")
           .attr("stroke", "red")
-          .attr("stroke-width", 1.5)
+          .attr("stroke-width", 1.75)
           .attr("d", d3.line()
             .x(function(d) { return x(d.date) })
             .y(function(d) { return y(d.value2) })
@@ -186,7 +186,9 @@
       .attr("class", "tooltip")
       .style("background-color", "white")
       .style("border", "solid")
-      .style("border-width", "1px")
+      .style("border-width", "2px")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
 
 
     const mouseover = function(event, d) {
